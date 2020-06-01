@@ -20,6 +20,8 @@ class Cupcake(db.Model):
     rating = db.Column(db.Float, nullable=False)
     image = db.Column(db.Text, nullable=False, default="https://images.unsplash.com/photo-1583625494781-8f80e36bd727?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80")
 
+    def cupcake_details(self):
+        return f"this is a {self.flavor} cupcake that is {self.size} and has a rating of {self.rating}"
 
     def serialize(self):
         return {
@@ -28,4 +30,8 @@ class Cupcake(db.Model):
             'size': self.size,
             'rating': self.rating,
             'image': self.image
+
         }
+
+
+

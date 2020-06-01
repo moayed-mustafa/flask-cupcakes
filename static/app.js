@@ -3,20 +3,50 @@ BASE_URL = "/api/cupcakes/"
 // api request to query all cupcakes
 btn = document.querySelector('.btn')
 btn.addEventListener('click', async function (e) {
-    ul = document.querySelector('.cupcakes')
+
+
+
     cupcakes = await axios.get(BASE_URL)
+    showCupcakes = document.querySelector('.show-cupcakes')
+    if (showCupcakes.hasChildNodes()) {
+            return
+    }
+    else {
 
     if (cupcakes.status == 200) {
-        // todo:use bootstrap and make those guys cards
         cupcake_data = cupcakes.data.cupcakes
         cupcake_data.forEach(cupcake => {
-            li = document.createElement('li')
-            li.innerHTML = `${cupcake.flavor} ${cupcake.rating}   `
-            ul.appendChild(li)
+
+            card = document.createElement('div')
+                card.classList.add('card', "m-2")
+                card.setAttribute("style","width: 14rem;")
+
+            cardImage = document.createElement('img')
+                cardImage.classList.add('card-img-top')
+                cardImage.setAttribute('src', cupcake.image)
+
+            cardBody = document.createElement('div')
+                cardBody.classList.add('card-body')
+
+            cardTitle = document.createElement('h5')
+                cardTitle.classList.add('card-title')
+                cardTitle.innerHTML = `${cupcake.flavor} cupcake`
+
+            cardText = document.createElement('p')
+            cardText.classList.add('card-text')
+                cardText.innerHTML = `this is a ${cupcake.flavor} cupcake that is ${cupcake.size} and has a rating of ${cupcake.rating}`
+
+            cardBody.appendChild(cardTitle)
+            cardBody.appendChild( cardText)
+            card.appendChild(cardImage)
+            card.appendChild(cardBody)
+            showCupcakes.appendChild(card)
+
 
         })
 
     }
+}
 })
 
 // form submisoin to add a cupcake
@@ -39,5 +69,5 @@ form.addEventListener('submit', async function (e) {
         method: "POST",
         data: cupcake
     })
-    console.log(res)
+    form.reset()
 })

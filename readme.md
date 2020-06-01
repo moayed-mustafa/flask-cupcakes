@@ -1,0 +1,1 @@
+- A RESTful api that works around the resource of a cupcake.

@@ -41,8 +41,12 @@ def post_cupcake():
     size = request.json['size']
     rating = request.json['rating']
     image = request.json.get('image')
+    print('image=',image)
     # create resuorce
-    cupcake = Cupcake(flavor=flavor, size=size, rating=rating, image=image)
+    if image != '':
+        cupcake = Cupcake(flavor=flavor, size=size, rating=rating, image=image)
+    else:
+        cupcake = Cupcake(flavor=flavor, size=size, rating=rating)
     db.session.add(cupcake)
     db.session.commit()
     response = cupcake.serialize()
